@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ulaa</class>
- <widget class="QWidget" name="ulaa">
+ <class>Ulaahead</class>
+ <widget class="QWidget" name="Ulaahead">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,9 +11,12 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Ulaahead</string>
   </property>
-  <widget class="QPushButton" name="pushButton_start_ulaahead">
+  <property name="locale">
+   <locale language="Chinese" country="China"/>
+  </property>
+  <widget class="QPushButton" name="pushButton_0">
    <property name="geometry">
     <rect>
      <x>5</x>
@@ -23,33 +26,163 @@
     </rect>
    </property>
    <property name="text">
-    <string>启动ulaahead</string>
+    <string>emoji_0</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_start_AIUI">
+  <widget class="QPushButton" name="pushButton_1">
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>40</y>
+     <y>35</y>
      <width>90</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string>启动AIUI</string>
+    <string>emoji_1</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_start_control">
+  <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>75</y>
+     <y>65</y>
      <width>90</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string>启动control</string>
+    <string>emoji_2</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>95</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_3</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>125</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_4</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_5">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>155</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_5</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_6">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>185</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_6</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_7">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>215</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_7</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_8">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>245</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_8</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_9">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>275</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_9</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_10">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>305</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_10</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_11">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>335</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_11</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_12">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>365</y>
+     <width>90</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>emoji_你</string>
    </property>
   </widget>
  </widget>

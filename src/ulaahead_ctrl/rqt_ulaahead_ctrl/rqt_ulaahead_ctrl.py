@@ -45,10 +45,22 @@ class MyPlugin(Node, Plugin):
         # Add widget to the user interface
         context.add_widget(self._widget)
 
-        self._widget.pushButton_start_ulaahead.clicked.connect(self.StartUlaaheadClicked)
-        self._widget.pushButton_start_AIUI.clicked.connect(self.StartAIUIClicked)
-        self._widget.pushButton_start_control.clicked.connect(self.StartControlClicked)
-        self.pub = self.create_publisher(String, "robot_state", 10) # 解析动作指令 发布消息
+        # TODO: 换成组合
+        self._widget.pushButton_0.clicked.connect(self.pushButton_0_Clicked)
+        self._widget.pushButton_1.clicked.connect(self.pushButton_1_Clicked)
+        self._widget.pushButton_2.clicked.connect(self.pushButton_2_Clicked)
+        # self._widget.pushButton_3.clicked.connect(self.pushButton_3_Clicked)
+        # self._widget.pushButton_4.clicked.connect(self.pushButton_4_Clicked)
+        # self._widget.pushButton_5.clicked.connect(self.pushButton_5_Clicked)
+        # self._widget.pushButton_6.clicked.connect(self.pushButton_6_Clicked)
+        # self._widget.pushButton_7.clicked.connect(self.pushButton_7_Clicked)
+        # self._widget.pushButton_8.clicked.connect(self.pushButton_8_Clicked)
+        # self._widget.pushButton_9.clicked.connect(self.pushButton_9_Clicked)
+        # self._widget.pushButton_10.clicked.connect(self.pushButton_10_Clicked)
+        self.pub = self.create_publisher(String, "action", 10) # 解析动作指令 发布消息
+        self.msg_pub = String()
+        self.msg_pub.data = "你好ulaa"
+        self.pub.publish(self.msg_pub)
 
     def shutdown_plugin(self):
         # TODO unregister all publishers here
@@ -69,13 +81,17 @@ class MyPlugin(Node, Plugin):
         # This will enable a setting button (gear icon) in each dock widget title bar
         # Usually used to open a modal configuration dialog
 
-    def StartUlaaheadClicked(self):
+    def PubMsg(self, data):
+        self.msg_pub.data = data
+        self.pub.publish(self.msg_pub)
+
+    def pushButton_0_Clicked(self):
         print("Start Ulaahead Clicked")
-        msg = String()
-        msg.data = "你好ulaa"
-        self.pub.publish(msg)
-    def StartAIUIClicked(self):
-        print("Start AIUI Clicked")
-    def StartControlClicked(self):
-        print("Start Control Clicked")
+        self.PubMsg("初始化")
+    def pushButton_1_Clicked(self):
+        print("Start Ulaahead Clicked")
+        self.PubMsg("单次眨眼")
+    def pushButton_2_Clicked(self):
+        print("Start Ulaahead Clicked")
+        self.PubMsg("单纯摇头（否定）")
     
