@@ -1,15 +1,16 @@
 import os
-import rclpy
-import rospkg
-
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from PyQt5.QtWidgets import QWidget
+import rclpy
+import rospkg
+from rclpy.node import Node
+from std_msgs.msg import String
 
-class MyPlugin(Plugin):
-
+class MyPlugin(Node, Plugin):
     def __init__(self, context):
-        super(MyPlugin, self).__init__(context)
+        super(MyPlugin, self).__init__("ulaaGUI")
+        super(Plugin, self).__init__(context)
         # Give QObjects reasonable names
         self.setObjectName('MyPlugin')
 
@@ -44,6 +45,11 @@ class MyPlugin(Plugin):
         # Add widget to the user interface
         context.add_widget(self._widget)
 
+        self._widget.pushButton_start_ulaahead.clicked.connect(self.StartUlaaheadClicked)
+        self._widget.pushButton_start_AIUI.clicked.connect(self.StartAIUIClicked)
+        self._widget.pushButton_start_control.clicked.connect(self.StartControlClicked)
+        self.pub = self.create_publisher(String, "robot_state", 10) # 解析动作指令 发布消息
+
     def shutdown_plugin(self):
         # TODO unregister all publishers here
         pass
@@ -62,3 +68,14 @@ class MyPlugin(Plugin):
         # Comment in to signal that the plugin has a way to configure
         # This will enable a setting button (gear icon) in each dock widget title bar
         # Usually used to open a modal configuration dialog
+
+    def StartUlaaheadClicked(self):
+        print("Start Ulaahead Clicked")
+        msg = String()
+        msg.data = "你好ulaa"
+        self.pub.publish(msg)
+    def StartAIUIClicked(self):
+        print("Start AIUI Clicked")
+    def StartControlClicked(self):
+        print("Start Control Clicked")
+    
