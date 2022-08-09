@@ -9,7 +9,7 @@ from std_msgs.msg import String
 
 class MyPlugin(Node, Plugin):
     def __init__(self, context):
-        super(MyPlugin, self).__init__("ulaaGUI")
+        super(MyPlugin, self).__init__("rqt_ulaahead_ctrl")
         super(Plugin, self).__init__(context)
         # Give QObjects reasonable names
         self.setObjectName('MyPlugin')
@@ -29,8 +29,8 @@ class MyPlugin(Node, Plugin):
         # Create QWidget
         self._widget = QWidget()
         # Get path to UI file which should be in the "resource" folder of this package
-        # ui_file = os.path.join(rospkg.RosPack().get_path('ulaagui'), 'resource', 'MyPlugin.ui')
-        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'ulaagui/MyPlugin.ui')
+        # ui_file = os.path.join(rospkg.RosPack().get_path('rqt_ulaahead_ctrl'), 'resource', 'MyPlugin.ui')
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaahead_ctrl/MyPlugin.ui')
         # Extend the widget with all attributes and children from UI file
         loadUi(ui_file, self._widget)
         # Give QObjects reasonable names

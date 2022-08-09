@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'ulaagui'
+package_name = 'rqt_ulaahead_ctrl'
 
 setup(
     name=package_name,
@@ -22,7 +22,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'ulaagui = ulaagui.ulaagui:main'
+            'rqt_ulaahead_ctrl = rqt_ulaahead_ctrl.rqt_ulaahead_ctrl:main'
         ],
     },
 )
