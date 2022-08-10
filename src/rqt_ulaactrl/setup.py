@@ -12,6 +12,8 @@ setup(
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name, ['plugin.xml']),
         ('lib/' + package_name, ['resource/' + 'ulaahead.ui']),
+        ('lib/' + package_name, ['resource/' + 'ulaabody.ui']),
+        ('lib/' + package_name, ['resource/' + 'ulaachassis.ui']),
         ('lib/' + package_name, ['resource/' + 'menu.ui']),
     ],
     install_requires=['setuptools'],

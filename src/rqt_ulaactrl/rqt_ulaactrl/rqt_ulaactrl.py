@@ -30,23 +30,33 @@ class MyPlugin(Node, Plugin):
         self._widget_ulaahead = QWidget()
         ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/ulaahead.ui')
         loadUi(ui_file, self._widget_ulaahead)
-        self._widget_ulaahead.setObjectName('MyPluginUi')
-        self._widget_ulaahead.setWindowTitle('Ulaa Ctrl')
-        if context.serial_number() > 1:
-            self._widget_ulaahead.setWindowTitle(self._widget_ulaahead.windowTitle() + (' (%d)' % context.serial_number()))
+        # self._widget_ulaahead.setObjectName('MyPluginUi')
+        # self._widget_ulaahead.setWindowTitle('Ulaa Ctrl')
+        # if context.serial_number() > 1:
+        #     self._widget_ulaahead.setWindowTitle(self._widget_ulaahead.windowTitle() + (' (%d)' % context.serial_number()))
         # Create QWidget
         self._widget_menu = QWidget()
         ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/menu.ui')
         loadUi(ui_file, self._widget_menu)
-        self._widget_menu.setObjectName('MyPluginMenu')
-        self._widget_menu.setWindowTitle('Ulaa Menu')
-        if context.serial_number() > 1:
-            self._widget_menu.setWindowTitle(self._widget_menu.windowTitle() + (' (%d)' % context.serial_number()))
-        # self._widget_menu.show()
+        # self._widget_menu.setObjectName('MyPluginMenu')
+        # self._widget_menu.setWindowTitle('Ulaa Menu')
+        # if context.serial_number() > 1:
+        #     self._widget_menu.setWindowTitle(self._widget_menu.windowTitle() + (' (%d)' % context.serial_number()))
+        # Create QWidget
+        self._widget_ulaabody = QWidget()
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/ulaabody.ui')
+        loadUi(ui_file, self._widget_ulaabody)
+        # Create QWidget
+        self._widget_ulaachassis = QWidget()
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/ulaachassis.ui')
+        loadUi(ui_file, self._widget_ulaachassis)
+        # Create QStackedWidget
         self.stackedWidget = QStackedWidget()
         self.stackedWidget.setWindowTitle('Ulaa Ctrl')
-        self.stackedWidget.addWidget(self._widget_ulaahead)
         self.stackedWidget.addWidget(self._widget_menu)
+        self.stackedWidget.addWidget(self._widget_ulaahead)
+        self.stackedWidget.addWidget(self._widget_ulaabody)
+        self.stackedWidget.addWidget(self._widget_ulaachassis)
         self.stackedWidget.setCurrentWidget(self._widget_menu)
         # Add widget to the user interface
         context.add_widget(self.stackedWidget)
@@ -76,13 +86,19 @@ class MyPlugin(Node, Plugin):
         self._widget_ulaahead.pushButton_w4.clicked.connect(self.pushButton_w4_Clicked)
 
         self._widget_ulaahead.pushButton_menu.clicked.connect(self.pushButton_menu_Clicked)
-    
+
+        self._widget_ulaabody.pushButton_menu.clicked.connect(self.pushButton_menu_Clicked)
+
+        self._widget_ulaachassis.pushButton_menu.clicked.connect(self.pushButton_menu_Clicked)
+
+        self._widget_menu.pushButton_ulaahead.clicked.connect(self.pushButton_ulaahead_Clicked)
+        self._widget_menu.pushButton_ulaabody.clicked.connect(self.pushButton_ulaabody_Clicked)
+        self._widget_menu.pushButton_ulaachassis.clicked.connect(self.pushButton_ulaachassis_Clicked)
+
         self.pub = self.create_publisher(String, "action", 10) # 解析动作指令 发布消息
         self.msg_pub = String()
         self.msg_pub.data = "你好ulaa"
         self.pub.publish(self.msg_pub)
-
-        self._widget_menu.pushButton_ulaahead.clicked.connect(self.pushButton_ulaahead_Clicked)
 
     def shutdown_plugin(self):
         # TODO unregister all publishers here
@@ -177,3 +193,7 @@ class MyPlugin(Node, Plugin):
         self.stackedWidget.setCurrentWidget(self._widget_menu)
     def pushButton_ulaahead_Clicked(self):
         self.stackedWidget.setCurrentWidget(self._widget_ulaahead)
+    def pushButton_ulaabody_Clicked(self):
+        self.stackedWidget.setCurrentWidget(self._widget_ulaabody)
+    def pushButton_ulaachassis_Clicked(self):
+        self.stackedWidget.setCurrentWidget(self._widget_ulaachassis)
