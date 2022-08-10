@@ -9,7 +9,7 @@ from std_msgs.msg import String
 
 class MyPlugin(Node, Plugin):
     def __init__(self, context):
-        super(MyPlugin, self).__init__("rqt_ulaahead_ctrl")
+        super(MyPlugin, self).__init__("rqt_ulaactrl")
         super(Plugin, self).__init__(context)
         # Give QObjects reasonable names
         self.setObjectName('MyPlugin')
@@ -29,8 +29,8 @@ class MyPlugin(Node, Plugin):
         # Create QWidget
         self._widget = QWidget()
         # Get path to UI file which should be in the "resource" folder of this package
-        # ui_file = os.path.join(rospkg.RosPack().get_path('rqt_ulaahead_ctrl'), 'resource', 'MyPlugin.ui')
-        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaahead_ctrl/MyPlugin.ui')
+        # ui_file = os.path.join(rospkg.RosPack().get_path('rqt_ulaactrl'), 'resource', 'MyPlugin.ui')
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/MyPlugin.ui')
         # Extend the widget with all attributes and children from UI file
         loadUi(ui_file, self._widget)
         # Give QObjects reasonable names
@@ -40,6 +40,7 @@ class MyPlugin(Node, Plugin):
         # plugins at once. Also if you open multiple instances of your 
         # plugin at once, these lines add number to make it easy to 
         # tell from pane to pane.
+        self._widget.setWindowTitle('Ulaa Ctrl')
         if context.serial_number() > 1:
             self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
         # Add widget to the user interface
@@ -75,6 +76,7 @@ class MyPlugin(Node, Plugin):
 
     def shutdown_plugin(self):
         # TODO unregister all publishers here
+        self.destroy_node()
         pass
 
     def save_settings(self, plugin_settings, instance_settings):

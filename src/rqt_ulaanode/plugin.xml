@@ -1,7 +1,7 @@
 <library path="src">
-  <class name="My Plugin" type="ulaagui.ulaagui.MyPlugin" base_class_type="rqt_gui_py::Plugin">
+  <class name="My Plugin" type="rqt_ulaanode.rqt_ulaanode.MyPlugin" base_class_type="rqt_gui_py::Plugin">
     <description>
-      An example Python GUI plugin to create a great user interface.
+      An Python GUI plugin for robot ulaa node user interface.
     </description>
     <qtgui>
       <!-- optional grouping...
@@ -12,7 +12,7 @@
         <label>Subgroup</label>
       </group>
       -->
-      <label>Ulaa Control Plugin</label>
+      <label>Ulaa Node Plugin</label>
       <icon type="theme">system-help</icon>
       <statustip>Great user interface to provide real value.</statustip>
     </qtgui>

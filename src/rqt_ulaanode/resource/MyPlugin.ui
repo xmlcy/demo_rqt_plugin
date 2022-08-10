@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ulaa</class>
- <widget class="QWidget" name="ulaa">
+ <class>UlaaNode</class>
+ <widget class="QWidget" name="UlaaNode">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>UlaaNode</string>
+  </property>
+  <property name="locale">
+   <locale language="Chinese" country="China"/>
   </property>
   <widget class="QPushButton" name="pushButton_start_ulaahead">
    <property name="geometry">
