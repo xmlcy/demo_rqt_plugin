@@ -1,7 +1,7 @@
 import os
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import *
 import rclpy
 import rospkg
 from rclpy.node import Node
@@ -27,52 +27,62 @@ class MyPlugin(Node, Plugin):
             print('unknowns: ', unknowns)
 
         # Create QWidget
-        self._widget = QWidget()
-        # Get path to UI file which should be in the "resource" folder of this package
-        # ui_file = os.path.join(rospkg.RosPack().get_path('rqt_ulaactrl'), 'resource', 'MyPlugin.ui')
-        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/MyPlugin.ui')
-        # Extend the widget with all attributes and children from UI file
-        loadUi(ui_file, self._widget)
-        # Give QObjects reasonable names
-        self._widget.setObjectName('MyPluginUi')
-        # Show _widget.windowTitle on left-top of each plugin (when 
-        # it's set in _widget). This is useful when you open multiple 
-        # plugins at once. Also if you open multiple instances of your 
-        # plugin at once, these lines add number to make it easy to 
-        # tell from pane to pane.
-        self._widget.setWindowTitle('Ulaa Ctrl')
+        self._widget_ulaahead = QWidget()
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/ulaahead.ui')
+        loadUi(ui_file, self._widget_ulaahead)
+        self._widget_ulaahead.setObjectName('MyPluginUi')
+        self._widget_ulaahead.setWindowTitle('Ulaa Ctrl')
         if context.serial_number() > 1:
-            self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
+            self._widget_ulaahead.setWindowTitle(self._widget_ulaahead.windowTitle() + (' (%d)' % context.serial_number()))
+        # Create QWidget
+        self._widget_menu = QWidget()
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaactrl/menu.ui')
+        loadUi(ui_file, self._widget_menu)
+        self._widget_menu.setObjectName('MyPluginMenu')
+        self._widget_menu.setWindowTitle('Ulaa Menu')
+        if context.serial_number() > 1:
+            self._widget_menu.setWindowTitle(self._widget_menu.windowTitle() + (' (%d)' % context.serial_number()))
+        # self._widget_menu.show()
+        self.stackedWidget = QStackedWidget()
+        self.stackedWidget.setWindowTitle('Ulaa Ctrl')
+        self.stackedWidget.addWidget(self._widget_ulaahead)
+        self.stackedWidget.addWidget(self._widget_menu)
+        self.stackedWidget.setCurrentWidget(self._widget_menu)
         # Add widget to the user interface
-        context.add_widget(self._widget)
+        context.add_widget(self.stackedWidget)
 
         # TODO: 换成组合
-        self._widget.pushButton_0.clicked.connect(self.pushButton_0_Clicked)
-        self._widget.pushButton_1.clicked.connect(self.pushButton_1_Clicked)
-        self._widget.pushButton_2.clicked.connect(self.pushButton_2_Clicked)
-        self._widget.pushButton_3.clicked.connect(self.pushButton_3_Clicked)
-        self._widget.pushButton_4.clicked.connect(self.pushButton_4_Clicked)
-        self._widget.pushButton_5.clicked.connect(self.pushButton_5_Clicked)
-        self._widget.pushButton_6.clicked.connect(self.pushButton_6_Clicked)
-        self._widget.pushButton_7.clicked.connect(self.pushButton_7_Clicked)
-        self._widget.pushButton_8.clicked.connect(self.pushButton_8_Clicked)
-        self._widget.pushButton_9.clicked.connect(self.pushButton_9_Clicked)
-        self._widget.pushButton_10.clicked.connect(self.pushButton_10_Clicked)
-        self._widget.pushButton_11.clicked.connect(self.pushButton_11_Clicked)
-        self._widget.pushButton_12.clicked.connect(self.pushButton_12_Clicked)
-        self._widget.pushButton_13.clicked.connect(self.pushButton_13_Clicked)
-        self._widget.pushButton_14.clicked.connect(self.pushButton_14_Clicked)
-        self._widget.pushButton_15.clicked.connect(self.pushButton_15_Clicked)
-        self._widget.pushButton_16.clicked.connect(self.pushButton_16_Clicked)
+        self._widget_ulaahead.pushButton_0.clicked.connect(self.pushButton_0_Clicked)
+        self._widget_ulaahead.pushButton_1.clicked.connect(self.pushButton_1_Clicked)
+        self._widget_ulaahead.pushButton_2.clicked.connect(self.pushButton_2_Clicked)
+        self._widget_ulaahead.pushButton_3.clicked.connect(self.pushButton_3_Clicked)
+        self._widget_ulaahead.pushButton_4.clicked.connect(self.pushButton_4_Clicked)
+        self._widget_ulaahead.pushButton_5.clicked.connect(self.pushButton_5_Clicked)
+        self._widget_ulaahead.pushButton_6.clicked.connect(self.pushButton_6_Clicked)
+        self._widget_ulaahead.pushButton_7.clicked.connect(self.pushButton_7_Clicked)
+        self._widget_ulaahead.pushButton_8.clicked.connect(self.pushButton_8_Clicked)
+        self._widget_ulaahead.pushButton_9.clicked.connect(self.pushButton_9_Clicked)
+        self._widget_ulaahead.pushButton_10.clicked.connect(self.pushButton_10_Clicked)
+        self._widget_ulaahead.pushButton_11.clicked.connect(self.pushButton_11_Clicked)
+        self._widget_ulaahead.pushButton_12.clicked.connect(self.pushButton_12_Clicked)
+        self._widget_ulaahead.pushButton_13.clicked.connect(self.pushButton_13_Clicked)
+        self._widget_ulaahead.pushButton_14.clicked.connect(self.pushButton_14_Clicked)
+        self._widget_ulaahead.pushButton_15.clicked.connect(self.pushButton_15_Clicked)
+        self._widget_ulaahead.pushButton_16.clicked.connect(self.pushButton_16_Clicked)
 
-        self._widget.pushButton_w1.clicked.connect(self.pushButton_w1_Clicked)
-        self._widget.pushButton_w2.clicked.connect(self.pushButton_w2_Clicked)
-        self._widget.pushButton_w3.clicked.connect(self.pushButton_w3_Clicked)
-        self._widget.pushButton_w4.clicked.connect(self.pushButton_w4_Clicked)
+        self._widget_ulaahead.pushButton_w1.clicked.connect(self.pushButton_w1_Clicked)
+        self._widget_ulaahead.pushButton_w2.clicked.connect(self.pushButton_w2_Clicked)
+        self._widget_ulaahead.pushButton_w3.clicked.connect(self.pushButton_w3_Clicked)
+        self._widget_ulaahead.pushButton_w4.clicked.connect(self.pushButton_w4_Clicked)
+
+        self._widget_ulaahead.pushButton_menu.clicked.connect(self.pushButton_menu_Clicked)
+    
         self.pub = self.create_publisher(String, "action", 10) # 解析动作指令 发布消息
         self.msg_pub = String()
         self.msg_pub.data = "你好ulaa"
         self.pub.publish(self.msg_pub)
+
+        self._widget_menu.pushButton_ulaahead.clicked.connect(self.pushButton_ulaahead_Clicked)
 
     def shutdown_plugin(self):
         # TODO unregister all publishers here
@@ -162,4 +172,8 @@ class MyPlugin(Node, Plugin):
     def pushButton_w4_Clicked(self):
         print("pushButton_w4_Clicked")
         self.PubMsg("微表情四")
-    
+
+    def pushButton_menu_Clicked(self):
+        self.stackedWidget.setCurrentWidget(self._widget_menu)
+    def pushButton_ulaahead_Clicked(self):
+        self.stackedWidget.setCurrentWidget(self._widget_ulaahead)
