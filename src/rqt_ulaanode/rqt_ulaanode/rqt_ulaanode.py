@@ -6,6 +6,7 @@ import rclpy
 import rospkg
 from rclpy.node import Node
 from std_msgs.msg import String
+from rqt_ulaanode.ssh_connect import SSHConnect
 
 class MyPlugin(Node, Plugin):
     def __init__(self, context):
@@ -13,6 +14,7 @@ class MyPlugin(Node, Plugin):
         super(Plugin, self).__init__(context)
         # Give QObjects reasonable names
         self.setObjectName('MyPlugin')
+        self.ssh = SSHConnect("192.168.50.240", "robot")
 
         # Process standalone plugin command-line arguments
         from argparse import ArgumentParser
@@ -43,9 +45,9 @@ class MyPlugin(Node, Plugin):
         # Add widget to the user interface
         context.add_widget(self.stackedWidget)
 
-        self._widget_connect.pushButton_connect.clicked.connect(self.ConnectClicked)
+        self._widget_connect.pushButton_connect.clicked.connect(self.Connect)
     
-        self._widget_ulaanode.pushButton_disconnect.clicked.connect(self.DisconnectClicked)
+        self._widget_ulaanode.pushButton_disconnect.clicked.connect(self.Disconnect)
         self._widget_ulaanode.pushButton_stop_all.clicked.connect(self.StopAll)
         self._widget_ulaanode.pushButton_start_all.clicked.connect(self.StartAll)
 
@@ -53,6 +55,7 @@ class MyPlugin(Node, Plugin):
 
     def shutdown_plugin(self):
         # TODO unregister all publishers here
+        self.Disconnect()
         self.destroy_node()
         pass
 
@@ -71,22 +74,30 @@ class MyPlugin(Node, Plugin):
         # This will enable a setting button (gear icon) in each dock widget title bar
         # Usually used to open a modal configuration dialog
 
-    def ConnectClicked(self):
-        print(self._widget_connect.lineEdit_ip.text())
-        print(self._widget_connect.lineEdit_username.text())
-        print(self._widget_connect.lineEdit_passwd.text())
-        self.stackedWidget.setCurrentWidget(self._widget_ulaanode)
-    def DisconnectClicked(self):
+    def Connect(self):
+        hostname = self._widget_connect.lineEdit_ip.text()
+        username = self._widget_connect.lineEdit_username.text()
+        passwd = self._widget_connect.lineEdit_passwd.text()
+        self.ssh.set_host(hostname, username)
+        if self.ssh.connect(passwd):
+            self.stackedWidget.setCurrentWidget(self._widget_ulaanode)
+            print('Connect')
+        else:
+            print('Connect faild')
+    def Disconnect(self):
         self.StopAll()
-        print('Disconnect')
+        self.ssh.close()
         self.stackedWidget.setCurrentWidget(self._widget_connect)
+        print('Disconnect')
     def StopAll(self):
         print("Stop All")
+        self.ssh.exec_cmd("./gui/stopall.sh")
         self._widget_ulaanode.pushButton_ulaahead.setChecked(False)
         self._widget_ulaanode.pushButton_ulaabody.setChecked(False)
         self._widget_ulaanode.pushButton_ulaachassis.setChecked(False)
     def StartAll(self):
         print("Start All")
+        self.ssh.exec_cmd("./gui/startall.sh")
         self._widget_ulaanode.pushButton_ulaahead.setChecked(True)
         self._widget_ulaanode.pushButton_ulaabody.setChecked(True)
         self._widget_ulaanode.pushButton_ulaachassis.setChecked(True)
