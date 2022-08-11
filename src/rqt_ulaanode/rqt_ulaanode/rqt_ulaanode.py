@@ -1,7 +1,7 @@
 import os
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import *
 import rclpy
 import rospkg
 from rclpy.node import Node
@@ -27,28 +27,28 @@ class MyPlugin(Node, Plugin):
             print('unknowns: ', unknowns)
 
         # Create QWidget
-        self._widget = QWidget()
-        # Get path to UI file which should be in the "resource" folder of this package
-        # ui_file = os.path.join(rospkg.RosPack().get_path('rqt_ulaanode'), 'resource', 'MyPlugin.ui')
-        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaanode/MyPlugin.ui')
-        # Extend the widget with all attributes and children from UI file
-        loadUi(ui_file, self._widget)
-        # Give QObjects reasonable names
-        self._widget.setObjectName('MyPluginUi')
-        # Show _widget.windowTitle on left-top of each plugin (when 
-        # it's set in _widget). This is useful when you open multiple 
-        # plugins at once. Also if you open multiple instances of your 
-        # plugin at once, these lines add number to make it easy to 
-        # tell from pane to pane.
-        self._widget.setWindowTitle('Ulaa Node')
-        if context.serial_number() > 1:
-            self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
+        self._widget_connect = QWidget()
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaanode/connect.ui')
+        loadUi(ui_file, self._widget_connect)
+        # Create QWidget
+        self._widget_ulaanode = QWidget()
+        ui_file = os.path.join(os.path.dirname(__file__), '../../../', 'rqt_ulaanode/ulaanode.ui')
+        loadUi(ui_file, self._widget_ulaanode)
+        # Create QStackedWidget
+        self.stackedWidget = QStackedWidget()
+        self.stackedWidget.setWindowTitle('Ulaa Node')
+        self.stackedWidget.addWidget(self._widget_connect)
+        self.stackedWidget.addWidget(self._widget_ulaanode)
+        self.stackedWidget.setCurrentWidget(self._widget_connect)
         # Add widget to the user interface
-        context.add_widget(self._widget)
+        context.add_widget(self.stackedWidget)
 
-        self._widget.pushButton_start_ulaahead.clicked.connect(self.StartUlaaheadClicked)
-        self._widget.pushButton_start_AIUI.clicked.connect(self.StartAIUIClicked)
-        self._widget.pushButton_start_control.clicked.connect(self.StartControlClicked)
+        self._widget_connect.pushButton_connect.clicked.connect(self.ConnectClicked)
+    
+        self._widget_ulaanode.pushButton_disconnect.clicked.connect(self.DisconnectClicked)
+        self._widget_ulaanode.pushButton_stop_all.clicked.connect(self.StopAll)
+        self._widget_ulaanode.pushButton_start_all.clicked.connect(self.StartAll)
+
         self.pub = self.create_publisher(String, "robot_state", 10) # 解析动作指令 发布消息
 
     def shutdown_plugin(self):
@@ -71,13 +71,23 @@ class MyPlugin(Node, Plugin):
         # This will enable a setting button (gear icon) in each dock widget title bar
         # Usually used to open a modal configuration dialog
 
-    def StartUlaaheadClicked(self):
-        print("Start Ulaahead Clicked")
-        msg = String()
-        msg.data = "你好ulaa"
-        self.pub.publish(msg)
-    def StartAIUIClicked(self):
-        print("Start AIUI Clicked")
-    def StartControlClicked(self):
-        print("Start Control Clicked")
+    def ConnectClicked(self):
+        print(self._widget_connect.lineEdit_ip.text())
+        print(self._widget_connect.lineEdit_username.text())
+        print(self._widget_connect.lineEdit_passwd.text())
+        self.stackedWidget.setCurrentWidget(self._widget_ulaanode)
+    def DisconnectClicked(self):
+        self.StopAll()
+        print('Disconnect')
+        self.stackedWidget.setCurrentWidget(self._widget_connect)
+    def StopAll(self):
+        print("Stop All")
+        self._widget_ulaanode.pushButton_ulaahead.setChecked(False)
+        self._widget_ulaanode.pushButton_ulaabody.setChecked(False)
+        self._widget_ulaanode.pushButton_ulaachassis.setChecked(False)
+    def StartAll(self):
+        print("Start All")
+        self._widget_ulaanode.pushButton_ulaahead.setChecked(True)
+        self._widget_ulaanode.pushButton_ulaabody.setChecked(True)
+        self._widget_ulaanode.pushButton_ulaachassis.setChecked(True)
     
